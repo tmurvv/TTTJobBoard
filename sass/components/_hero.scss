@@ -1,0 +1,38 @@
+.hero {
+    width: 100%;
+    height: 250px;
+    background-image: linear-gradient( rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../img/jobSearchGears.jpg);
+    background-size: cover;
+    position: relative;
+
+    //logo stylings found in layout/_navigation.scss
+
+    &__mainTitle {
+        width: 100%;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: $colorGrey-light1;
+        &--mainHeading {
+            font-weight: 300;
+            letter-spacing: 3px;
+            @include respond(phone) {
+                font-size: 120%;
+                font-weight: 400;
+            }
+        }
+
+        &--subHeading {
+            font-weight: 400;
+            letter-spacing: 3px;
+            &>span {
+                color: $colorPrimary;
+            }
+            @include respond(phone) {
+                font-size: 145%;
+            }
+        }
+    }
+}

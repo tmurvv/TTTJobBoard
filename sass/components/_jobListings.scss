@@ -1,0 +1,53 @@
+.listings {
+    padding: 0 2rem 0 2rem;
+    @include respond(portrait) {
+        padding: 0;
+    }
+
+    &__job {
+        display: flex; 
+        @include respond(portrait) {
+            display: block;
+        }
+        padding-top: 1.5rem;
+        
+        &--type {
+            flex:1;
+            align-self: center;
+            justify-self: center;
+            display: inline-flex;                     
+            margin: 2rem;
+            @include respond(portrait) {
+                margin: 0;
+            }
+        }
+
+        &--info {
+            flex:5;
+            font-size: 80%;
+
+            &-line1 {
+                display: flex;
+                @include respond(portrait) {
+                    margin-top: 1rem;
+                }
+            }
+
+            &-line2 {
+                display: flex;
+                justify-content: space-between;
+                &-datePosted {
+                    font-style: italic;
+                    
+                }
+            }
+            
+            &-description {
+                &ReadMore {
+                    color: $colorPrimary;
+                    font-size: .7rem;
+                }
+            }
+        }
+    }
+}
