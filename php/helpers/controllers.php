@@ -3,6 +3,8 @@
     search select boxes (category, Job Type, Location)  */
 
 function createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID) {
+    // echo 'imhrer'.$categorySearchID.$locationSearchID.$jobtypeSearchID;
+    // return;
     if ($locationSearchID == 'empty') {
         if ($categorySearchID=="empty" && $jobtypeSearchID=="empty") {
             $query = "SELECT * FROM joblistings ORDER BY dateposted DESC";

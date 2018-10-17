@@ -1,5 +1,6 @@
 <head>
-
+    <!-- contact.php does not use this file and changes made here need to be implemented there as well. -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,8 +11,7 @@
 
     <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js\script.js?173"></script>
-
+    <script type="text/javascript" src="js\script.js?178"></script>
     <title>InnoTech JobBoard</title>
 
 </head>

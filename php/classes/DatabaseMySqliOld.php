@@ -32,9 +32,9 @@ class Database{
      * Select
      */
     public function select($query){
-        $result = $this->link->query($query) or die($this->link->error.__LINE__);
-        if($result->num_rows > 0){
-            return $result;
+        $_SESSION['result'] = $this->link->query($query) or die($this->link->error.__LINE__);
+        if($_SESSION['result']->num_rows > 0){
+            return $_SESSION['result'];
         } else {
             return false;
         }
