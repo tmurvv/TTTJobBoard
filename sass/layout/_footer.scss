@@ -72,11 +72,13 @@
         }
     }
     &__copy {
-        color: #888;
         text-align: center;
         margin-top: 1rem;
         @include respond(portrait) {
             font-size: 90%;           
+        }
+        &>a {
+            color: $colorSecondary;
         }
     }
 }

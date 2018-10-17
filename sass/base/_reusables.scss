@@ -1,0 +1,8 @@
+.messageBox {
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+    border: 7px double $colorSecondary;
+    border-radius: 7px;
+    padding: 5px 12px;
+}

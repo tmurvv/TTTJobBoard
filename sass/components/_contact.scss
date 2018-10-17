@@ -1,5 +1,10 @@
+/********* 
+*Class .contact is for contact section on index.php. 
+*Scroll down for Class .contactPage style-elements
+**********/
+
 .contact {
-    font-size: .8rem;
+    //font-size: .8rem;
     line-height: normal;
     background-color: #e7e7e7;
     padding: 1.5rem 10%;
@@ -23,12 +28,61 @@
         margin: 0 auto;
         &:after {
             display: block;
-            height: 2px;
-            background-color: $colorPrimary;
+            height: 2px;           
             content: ' ';
             width: 100px;
             margin: 0 auto;
             margin-top: 30px;
+            background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(5,132,192,.8), rgba(0,0,0,0));
+            background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(5,132,192,.8), rgba(0,0,0,0));
+            background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(5,132,192,.8), rgba(0,0,0,0));
+            border: 0;
+            background-color: #e7e7e7;
+        }
+    }
+}
+
+.contactPage {
+    background-color: #e7e7e7;
+    &__mapBlock {
+        display: flex;
+        display: -webkit-flex;
+
+        @include respond(portrait) {
+            display: block;
+        }
+
+        justify-content: space-around;
+        flex-wrap: wrap;
+        width: 80%;
+        margin: auto;  
+        &--mapInstance {
+            height: 400px;
+            width: 48%;
+
+            @include respond(portrait) {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            position: relative;
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            &-mapItem {
+                height: 90%;
+            }
+
+            &-cityName {
+                text-align: center;
+                color: #000;
+                text-transform: uppercase;
+                font-weight: bold;
+                background: #a2ccff; //matches water in map, not in main color-palette
+                height: 10%;
+                line-height: 2em;
+            }
         }
     }
 }

@@ -1,0 +1,29 @@
+.adminLogin {
+    margin: 50px 25px;
+
+    &__mainHeading {
+        text-decoration: none;
+        color: $colorGrey-dark1;
+    }
+    &__mainHeading>span {
+        color: $colorPrimary;
+    }
+
+    &__passwordInput {        
+        display: block;
+        font-size: 100%;
+        
+        &>input {
+            font-size: 100%;
+            padding: 3px 5px;
+            border-radius: 7px;
+            width: 450px;
+            margin-bottom:25px;
+        }
+        
+        &--buttons>input,
+        &--buttons>a, {
+            font-size: 100%;
+        }       
+    }    
+}

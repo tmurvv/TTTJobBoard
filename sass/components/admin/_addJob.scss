@@ -15,6 +15,9 @@
         margin: 10px;
         font-size: 125%;
     }
+    &>h2>span {
+        color:$colorPrimary;
+    }
 
     &__job {
         
@@ -26,8 +29,7 @@
             margin: 10px;
         }
 
-        
-
+       
         & * input {
             width: 100%;
         }
@@ -37,8 +39,22 @@
                 width: 150px;
             }
         }
-        &--type {
-
+        &--passwordInput {
+            display: block;
+            font-size: 125%;
+            
+            &>input,
+            &>a {
+                font-size: 125%;
+                padding: 3px 5px;
+                border-radius: 7px;
+            }
+            
+            &-buttons>input,
+            &-buttons>a, {
+                font-size: 125%;
+                width: auto;
+            }
         }
     }    
 }

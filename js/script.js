@@ -4,28 +4,25 @@
 
 function adminProtect() {
     var chances = 1;
-    var pass1 = alert('Password protection could be implemented here.');
-    // while (chances < 7) {
-    //     if (!pass1) {
-    //         history.go(-1);
-    //     }
-    //     if (pass1.toLowerCase() == "admin4014") {
-    //         //open admin window
-    //         window.open("admin.php");
+    var pass1 = prompt('Please Enter Your Password');
+    while (chances < 7) {
+        if (!pass1) {
+            history.go(-1);
+        }
+        if (pass1.toLowerCase() == "admin4014") {
+            //open admin window
+            window.open("admin.php");
 
-    //         break;
-    //     } 
-    //     chances+=1;
-    //     var pass1 = 
-    //     prompt('Password Incorrect, Please Try Again.');
-    // }
-    // if (pass1.toLowerCase()!="password" && chances ==7) {
-    //     history.go(-1);
-    // }
-    // return " ";
-
-    //open admin window erase next line when above password protection implemented
-        window.open("admin.php");
+            break;
+        } 
+        chances+=1;
+        var pass1 = 
+        prompt('Password Incorrect, Please Try Again.');
+    }
+    if (pass1.toLowerCase()!="password" && chances ==7) {
+        history.go(-1);
+    }
+    return " ";
 }  
 
 function startEditSelector(clickedItem) {
