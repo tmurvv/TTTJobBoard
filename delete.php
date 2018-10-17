@@ -1,47 +1,95 @@
-<?php include 'php/config/config.php'; ?>
-<?php include 'php/classes/Database.php'; ?>
-<?php include 'php/helpers/formatting.php'; ?>
+<?php 
+    //Start the session
+    session_start();
+    $_SESSION['result']='';
+     
+    try{
+        include 'php/config/config.php';
+        include 'php/classes/Database.php';
+        include 'php/helpers/controllers.php';
+        include 'php/helpers/formatting.php';
+    }catch (PDOException $ex) {
+        echo 'File not found. Please contact the system administrator.';
+    }
+
+    //Validate Admin Token
+    if (!$_SESSION['adminToken'] == $systemAdminToken) {
+        echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
+        return;
+    }
+?>
 <?php
     //Retrieve id for job editting
     $id = $_GET['id'];
   
     //Create Query
-    $query = "SELECT * FROM joblistings WHERE id = :id";
-    $statement = $db->prepare($query);
-    $statement->execute(array('id'=>$id));
-    $delete=$statement->fetch();
+    try{
+        $query = "SELECT * FROM joblistings WHERE id = :id";
+        $statement = $db->prepare($query);
+        $statement->execute(array('id'=>$id));
+        $delete=$statement->fetch();
+    }catch(PDOException $ex){
+        $_SESSION['result'] = "An error occurred.";
+    }
 
     if(isset($_POST['delete'])){
         
-        //Create delete query
-        $query = "DELETE FROM joblistings WHERE id = ".$id;
-        //Run delete query
-        $db->exec($query);
-        header("Location: admin.php");
+        try{
+            //Create and run delete query
+            $query = "DELETE FROM joblistings WHERE id = ".$id;
+            $db->exec($query);
+            header("Location: admin.php");
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "An error occurred.";
+        }
     }
 ?>
-    <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php 
+        try{
+            include 'php/reusables/head.php';
+        }catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
+</head>
+<body>
+    <?php 
+        try{
+            include 'php/reusables/hero.php';
+        }catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
+    <?php 
+        if(!$_SESSION['result']==''){
+            echo "<div class='messageBox'><h3>";
+            echo $_SESSION['result']; 
+            echo "</h3></div>";
+            $_SESSION['result'] = ""; 
+        }
+    ?>
+    <div class="deleteJob">
+        <div class="deleteJob__ask">Delete Job Listing
+            <br>
+            '<?php echo $delete['title']; ?>'? </div>
+        <form method="post" action="delete.php?id=<?php echo $id; ?>">
+            <input name="delete" type="submit" class="btn btn__danger" value="Delete" />
+        </form>
+        <a href="admin.php" class="btn btn__secondary">Cancel</a>
+    </div>
+    <!-- FOOTER -->
+    <section>
+        <?php 
+            try{
+                include 'php/reusables/footer.php';
+            }catch (PDOException $ex) {
+                $_SESSION['result'] = "An error occurred.";
+            }
+        ?>
+    </section>
+</body>
 
-    <html lang="en">
-
-    <?php include 'php/reusables/head.php' ?>
-
-    <body>
-        <?php include 'php/reusables/hero.php' ?>
-        <div class="deleteJob">
-            <div class="deleteJob__ask">Delete Job Listing
-                <br>
-                '<?php echo $delete['title']; ?>'? </div>
-            <form method="post" action="delete.php?id=<?php echo $id; ?>">
-                <input name="delete" type="submit" class="btn btn__danger" value="Delete" />
-            </form>
-            <a href="admin.php" class="btn btn__secondary">Cancel</a>
-        </div>
-
-        <!-- FOOTER -->
-        <section>
-            <?php include 'php/reusables/footer.php' ?>
-        </section>
-    </body>
-
-    </html>
+</html>

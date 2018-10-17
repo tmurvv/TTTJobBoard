@@ -1,36 +1,64 @@
-<?php include 'php/config/config.php'; ?>
-<?php include 'php/classes/Database.php'; ?>
-<?php include 'php/helpers/formatting.php'; ?>
-<?php
-    //Retrieve id for edit/delete
-    $id = $_GET['id'];
-    include 'php/reusables/selectorQueries.php';
+<?php 
+    //Start the session
+    session_start();
+     
+    try{
+        include 'php/config/config.php';
+        include 'php/classes/Database.php';
+        include 'php/helpers/controllers.php';
+        include 'php/helpers/formatting.php';
+    }catch (PDOException $ex) {
+        echo 'File not found. Please contact the system administrator.';
+    }
+
+    //Validate Admin Token
+    if (!$_SESSION['adminToken'] == $systemAdminToken) {
+        echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
+        return;
+    }
 ?>
 <?php 
+    try{
+        include 'php/reusables/selectorQueries.php';
+    }catch(PDOException $ex){
+        $_SESSION['result'] = "File not found. Please contact the system administrator.";
+    }    
+ ?>
+<?php 
+    //Retrieve id for edit/delete
+    $id = $_GET['id'];
     if(isset($_POST['addcat'])){
+        
         //Assign Vars   
         $category = $_POST['category'];
         $categoryvieworder = $_POST['categoryvieworder'];
-       
-        //Create Data
+    
+        if (!$category) {
+            $_SESSION['result'] = "Please enter a category."; 
+        }else{
+            //Create Data
         $newData = [
             'category' => $category,
             'categoryvieworder' => $categoryvieworder
         ];
-
-        //Create Query
-        $sql = "INSERT INTO categories(  
-                    category,
-                    categoryvieworder
-                    ) VALUES(
-                        :category,
-                        :categoryvieworder      
-                    )";
-
-        //Prepare and execute query
-        $stmt= $db->prepare($sql);
-        $stmt->execute($newData);
-        header('Location: addeditselectors.php'); 
+        
+        //Create, prepare and execute Query
+        try{
+            $sql = "INSERT INTO categories(  
+                category,
+                categoryvieworder
+                ) VALUES(
+                    :category,
+                    :categoryvieworder      
+                )";
+            $stmt= $db->prepare($sql);
+            $stmt->execute($newData);
+            $_SESSION['result']="Item added.";
+        }catch(PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+        header('Location: addeditselectors.php');
+        }         
     }
     if(isset($_POST['editcat'])){
         //Assign Vars   
@@ -44,22 +72,30 @@
             'categoryvieworder' => $categoryvieworder,
             'id' => $id
         ];
-        //Create Query
-        $sql = "UPDATE categories SET 
+        //Create, prepare, and execute query
+        try{
+            $sql = "UPDATE categories SET 
                     category = :category,
                     categoryvieworder = :categoryvieworder
                     WHERE id=:id";
-        //Prepare and execute query
-        $stmt= $db->prepare($sql);
-        $stmt->execute($newData);
+            $stmt= $db->prepare($sql);
+            $stmt->execute($newData);
+            $_SESSION['result']="Item updated.";
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "An error occurred.";
+        }
         header('Location: addeditselectors.php');
     }
     if(isset($_POST['deletecat'])){
         
-        //Create delete query
-        $query = "DELETE FROM categories WHERE id = ".$id;
-        //Run delete query
-        $db->exec($query);
+       try{
+            //Create and run delete query
+            $query = "DELETE FROM categories WHERE id = ".$id;
+            $db->exec($query);
+            $_SESSION['result']="Item deleted.";
+        }catch(PDOException $ex){
+           $_SESSION['result'] = "An error occurred.";
+        }
         header("Location: addeditselectors.php");
     }
 
@@ -68,25 +104,32 @@
         $jobtype = $_POST['jobtype'];
         $jobtypevieworder = $_POST['jobtypevieworder'];
         
-        //Create Data
-        $newData = [
-            'jobtype' => $jobtype,
-            'jobtypevieworder' => $jobtypevieworder
-        ];
+        if (!$jobtype) {
+            $_SESSION['result'] = "Please enter a job type."; 
+        }else{
+            //Create Data
+            $newData = [
+                'jobtype' => $jobtype,
+                'jobtypevieworder' => $jobtypevieworder
+            ];
 
-        //Create Query
-        $sql = "INSERT INTO jobtypes(  
+            //Create, prepare, and execute query
+            try{
+                $sql = "INSERT INTO jobtypes(  
                     jobtype,
                     jobtypevieworder
                     ) VALUES(
                         :jobtype,
                         :jobtypevieworder      
                     )";
-
-        //Prepare and execute query
-        $stmt= $db->prepare($sql);
-        $stmt->execute($newData);
-        header('Location: addeditselectors.php');
+                $stmt= $db->prepare($sql);
+                $stmt->execute($newData);
+                $_SESSION['result']="Item added.";
+            }catch(PDOException $ex){
+                $_SESSION['result'] = "An error occurred.";
+            }
+            header('Location: addeditselectors.php');
+        }       
     }
     if(isset($_POST['editjobtype'])){
         //Assign Vars   
@@ -99,22 +142,31 @@
             'jobtypevieworder' => $jobtypevieworder,
             'id' => $id
         ];
-        //Create Query
-        $sql = "UPDATE jobtypes SET 
+
+        //Create, prepare, and execute query
+        try{
+            $sql = "UPDATE jobtypes SET 
                     jobtype = :jobtype,
                     jobtypevieworder = :jobtypevieworder
                     WHERE id=:id";
-        //Prepare and execute query
-        $stmt= $db->prepare($sql);
-        $stmt->execute($newData);
+            $stmt= $db->prepare($sql);
+            $stmt->execute($newData);
+            $_SESSION['result']="Item updated.";
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "An error occurred.";
+        }
         header('Location: addeditselectors.php');
     }
     if(isset($_POST['deletejobtype'])){
         
-        //Create delete query
-        $query = "DELETE FROM jobtypes WHERE id = ".$id;
-        //Run delete query
-        $db->exec($query);
+        //Create and run delete query
+        try{
+            $query = "DELETE FROM jobtypes WHERE id = ".$id;
+            $db->exec($query);
+            $_SESSION['result'] = "Item deleted.";
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "An error occurred.";
+        }
         header("Location: addeditselectors.php");
     }
     if(isset($_POST['addlocation'])){
@@ -122,25 +174,33 @@
         $location = $_POST['location'];
         $locationvieworder = $_POST['locationvieworder'];
         
-        //Create Data
-        $newData = [
-            'location' => $location,
-            'locationvieworder' => $locationvieworder
-        ];
+        if (!$location) {
+            $_SESSION['result'] = "Please enter a location."; 
+        }else{ 
+            //Create Data
+            $newData = [
+                'location' => $location,
+                'locationvieworder' => $locationvieworder
+            ];
 
-        //Create Query
-        $sql = "INSERT INTO locations(  
+            //Create,prepare, and execute Query
+            try{
+                $sql = "INSERT INTO locations(  
                     location,
                     locationvieworder
                     ) VALUES(
                         :location,
                         :locationvieworder      
                     )";
-
-        //Prepare and execute query
-        $stmt= $db->prepare($sql);
-        $stmt->execute($newData);
-        header('Location: addeditselectors.php');
+                $stmt= $db->prepare($sql);
+                $stmt->execute($newData);
+                $_SESSION['result']="Item added.";
+            }catch(PDOException $ex){
+                $_SESSION['result'] = "An error occurred.";
+            }
+            header('Location: addeditselectors.php');
+        }
+        
     }
     if(isset($_POST['editlocation'])){
         //Assign Vars   
@@ -153,37 +213,67 @@
             'locationvieworder' => $locationvieworder,
             'id' => $id
         ];
-        //Create Query
-        $sql = "UPDATE locations SET 
+        //Create, prepare, and execute Query
+        try{
+            $sql = "UPDATE locations SET 
                     location = :location,
                     locationvieworder = :locationvieworder
                     WHERE id=:id";
-        //Prepare and execute query
-        $stmt= $db->prepare($sql);
-        $stmt->execute($newData);
+            $stmt= $db->prepare($sql);
+            $stmt->execute($newData);
+            $_SESSION['result'] = "Item updated.";
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "An error occurred.";
+        }
         header('Location: addeditselectors.php');
     }
     if(isset($_POST['deletelocation'])){
         
-        //Create delete query
-        $query = "DELETE FROM locations WHERE id = ".$id;
-        //Run delete query
-        $db->exec($query);
+        //Create and run delete query
+       try{
+            $query = "DELETE FROM locations WHERE id = ".$id;
+            $db->exec($query);
+            $_SESSION['result'] = "Item deleted.";
+        }catch(PDOException $ex){
+           $_SESSION['result'] = "An error occurred.";
+        }
         header("Location: addeditselectors.php");
     }
+
 ?>
 <!DOCTYPE html>
 
 <html lang="en">
 
-<?php include 'php/reusables/head.php' ?>
+<?php 
+    try{
+        include 'php/reusables/head.php';
+    }catch(PDOException $ex){
+        $_SESSION['result'] = "File not found. Please contact the system administrator.";
+    }    
+ ?>
 
 <body>
-    <?php include 'php/reusables/hero.php' ?>
+    <?php 
+        try{
+            include 'php/reusables/hero.php';
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "File not found. Please contact the system administrator.";
+        }    
+    ?>
     <div class="updateSelectorsHeading">
         <h2 class="addJob__mainHeading">Job<span>Board</span></h2>
 
         <h3>Add/Edit/Delete Selectors</h3>
+
+        <?php 
+           if(!$_SESSION['result']==''){
+                echo "<div class='messageBox'><h3>";
+                echo $_SESSION['result']; 
+                echo "</h3></div>";
+                $_SESSION['result'] = ""; 
+            }
+        ?>
     </div>
     <div class="updateSelectors">
 
@@ -298,12 +388,15 @@
                 <?php endforeach; ?>         
         </div>
     </div>
-
     <!-- FOOTER -->
     <section>
-        <?php include 'php/reusables/footer.php' ?>
+    <?php 
+        try{
+            include 'php/reusables/footer.php';
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "File not found. Please contact the system administrator.";
+        }    
+    ?>
     </section>
-
 </body>
-
 </html>

@@ -1,41 +1,74 @@
-<?php include 'php/config/config.php'; ?>
-<?php include 'php/classes/Database.php'; ?>
-<?php include 'php/helpers/controllers.php'; ?>
-<?php include 'php/helpers/formatting.php'; ?>
-<?php
-    //Get message
-    $msg = $_GET['msg'];
-    // if($msg) {
-    // header("Location: addeditselectors.php");
-    // }
-    $msg = completeMsg($msg);
+<?php 
+    //Start the session
+    session_start();
+    $_SESSION['result']='';
+     
+    try{
+        include 'php/config/config.php';
+        include 'php/classes/Database.php';
+        include 'php/helpers/controllers.php';
+        include 'php/helpers/formatting.php';
+    }catch (PDOException $ex) {
+        echo 'File not found. Please contact the system administrator.';
+    }
 
-  //Create DB Object
-  //$db = new Database();
-  $categorySearchID = $_GET['category'];
+    //Validate Admin Token
+    if (!$_SESSION['adminToken'] == $systemAdminToken) {
+        echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
+        return;
+    }
+?>
+<?php
+  //Assign POST variables
+  $categorySearchID = $_POST['category'];
+  $jobtypeSearchID = $_POST['jobtype'];
+  $locationSearchID = $_POST['location'];
+
+  //Initialize search IDs
   if(!$categorySearchID){
       $categorySearchID = "empty";
-  }
-  $jobtypeSearchID = $_GET['jobtype'];
+  } 
   if (!$jobtypeSearchID){
       $jobtypeSearchID = "empty";
-  }
-  $locationSearchID = $_GET['location'];
+  }  
   if (!$locationSearchID){
       $locationSearchID = "empty";
   }
-  //Create Query
-  $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
-  $statement = $db->prepare($query);
-  $statement->execute();
-  $listings=$statement->fetchAll();
+
+  //Create Search Query
+  try{
+    $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $listings=$statement->fetchAll();
+  }catch(PDOException $ex){
+    $_SESSION['result'] = "An error occurred.";
+  } 
 ?>
-<?php include 'php/reusables/selectorQueries.php'; ?>
+<?php 
+    try{
+        include 'php/reusables/selectorQueries.php';
+    }catch(PDOException $ex){
+        $_SESSION['result'] = "File not found. Please contact the system administrator.";
+    }    
+ ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'php/reusables/head.php' ?>
+    <?php 
+        try{
+            include 'php/reusables/head.php';
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "File not found. Please contact the system administrator.";
+        }
+    ?>
 <body>
-<?php include 'php/reusables/hero.php' ?>
+    <?php 
+        try{
+            include 'php/reusables/hero.php';
+        }catch(PDOException $ex) {
+            $_SESSION['result'] = "File not found. Please contact the system administrator.";
+        }
+    ?>
     <div class="menus">
         <div class="menus__addNav">
             <ul class="menus__addNav--container">
@@ -54,21 +87,36 @@
             </ul>
         </div>
         <div class="search__form">
+            <?php 
+                if(!$_SESSION['result']==''){
+                    echo "<div class='messageBox'><h3>";
+                    echo $_SESSION['result']; 
+                    echo "</h3></div>";
+                    $_SESSION['result'] = ""; 
+                }
+            ?>
             <div class="search__form--title">
                 <h2>Search</h2>
             </div>
             <div class="search__form--selectBoxes">
-                <form action="admin.php?this.options[this.selectedIndex].value" id="main" name="main" method="get">
-                    <?php include 'php/reusables/selectors.php' ?>
+                <form action="admin.php?this.options[this.selectedIndex].value" id="main" name="main" method="post">
+                    <?php 
+                        try{
+                            include 'php/reusables/selectors.php';
+                        }catch(PDOException $_COOKIE){
+                            $_SESSION['result'] = "File not found. Please contact the system administrator.";
+                        }
+                    ?>
                 </form>
             </div>
         </div>
     </div>
     <div class="mainBoard" id="jobs">
-    <?php 
-        if ($msg) {
-            echo "<div class='admin__messageBox'>".$msg."</div>";
-        } ?>
+        <?php 
+            if ($msg) {
+                echo "<div class='admin__messageBox'>".$msg."</div>";
+            } 
+        ?>
         <h1>Job<span>Board</span>
         </h1>
         <h3>Admin Page</h3>
@@ -89,10 +137,7 @@
                         </h2>
                     </div>
                     <div class="listings__job--info-line2">
-
-
                         <?php echo $row['category'] ?>
-
                         <div class="listings__job--info-line2-datePosted">
                             <?php echo $row['dateposted'] ?>
                         </div>
@@ -101,7 +146,6 @@
                         <a href="edit.php?id=<?php echo $row['id']; ?>" class="admin__editDelete--edit btn btn__primary">Edit</a>
                         <a href="delete.php?id=<?php echo $row['id']; ?>" class="admin__editDelete--delete btn btn__danger">Delete</a>
                     </div>
-
                     <br>
                     <div class="listings__job--info-description">
                         <?php echo $row['description'] ?>
@@ -115,15 +159,15 @@
         </div>
 
     </div>
-    </div>
-    </div>
-
-        <!-- FOOTER -->
-
-<section>
-    <?php include 'php/reusables/footer.php' ?>
-</section>
-
+    <!-- FOOTER -->
+    <section>
+        <?php 
+            try{
+                include 'php/reusables/footer.php';
+            }catch(PDOException $ex){
+                $_SESSION['result'] = "File not found. Please contact the system administrator.";
+            }
+        ?>
+    </section>
 </body>
-
 </html>

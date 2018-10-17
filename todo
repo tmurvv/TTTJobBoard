@@ -1,5 +1,2 @@
-validations sanitizing on all edits and adds
-Make it so admin page does not open new window
-refactor add/edit selector css
-make is so delete joblisting pulls up alert instead of delete php.
-add cancel button to add page
+refactor add/edit selector css and php instructions
+make is so delete joblisting pulls up alert instead of delete php

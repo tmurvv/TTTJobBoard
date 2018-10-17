@@ -1,68 +1,104 @@
 <?php
-    $thisURL = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $myMessage = $_GET['msg'];
-    
-    if ($myMessage == "Record Added") {
-        header("Location: admin.php?msg=added");  
-    } 
-    if ($myMessage == "Record Deleted") {
-        header("Location: admin.php?msg=deleted");  
-    } 
-    if ($myMessage == "Record Updated") {
-        header("Location: admin.php?msg=updated");  
-    }
+    // Start the session
+    session_start();
 ?>
-<?php include 'php/config/config.php'; ?>
-<?php include 'php/classes/Database.php'; ?>
-<?php include 'php/helpers/controllers.php'; ?>
-<?php include 'php/helpers/formatting.php'; ?>
-<?php
-    $categorySearchID = $_GET['category'];
+<?php     
+    try{
+        include 'php/config/config.php';
+        include 'php/classes/Database.php';
+        include 'php/helpers/controllers.php';
+        include 'php/helpers/formatting.php';
+    }catch (PDOException $ex) {
+        echo 'File not found. Please contact the system administrator.';
+    } 
+?>
+<?php 
+    //Get POST variables
+    $categorySearchID = $_POST['category'];
+    $jobtypeSearchID = $_POST['jobtype'];
+    $locationSearchID = $_POST['location'];
 
-    //Initialize category search ID
+    //Initialize search IDs if not POSTED
     if(!$categorySearchID){
         $categorySearchID = "empty";
     }
-    $jobtypeSearchID = $_GET['jobtype'];
     if (!$jobtypeSearchID){
         $jobtypeSearchID = "empty";
-    }
-    $locationSearchID = $_GET['location'];
+    }   
     if (!$locationSearchID){
         $locationSearchID = "empty";
     }
-    
-    //Create Query
-    $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $listings=$statement->fetchAll();
+ 
+    //Create and execute Query  
+    try{
+        $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $listings=$statement->fetchAll();
+
+        //if no job listings found
+        if (count($listings) == 0) {
+            $_SESSION['result'] = "No job listings found.";
+        }
+    }catch (PDOException $ex) {
+        $_SESSION['result'] = "An error occurred.";
+    }    
 ?>
 <!-- Create Selector Queries for search area select boxes-->
-<?php include 'php/reusables/selectorQueries.php'; ?>
-
+<?php try{
+    include 'php/reusables/selectorQueries.php';
+    }catch (PDOException $ex) {
+        $_SESSION['result'] = "An error occurred.";
+    }
+?>
 <!DOCTYPE html>
-<html lang="en">
-<?php include 'php/reusables/head.php'; ?>
-
+<head>
+    <html lang="en">
+    <?php try{
+            include 'php/reusables/head.php';
+        }catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
+</head>
 <body>
-    <?php include 'php/reusables/hero.php'; ?>
-
+    <?php 
+        try{ 
+            include 'php/reusables/hero.php';
+        }catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
     <div class="search">
         <div class="search__form">
             <div class="search__form--title">
                 <h2>Search</h2>
             </div>
             <div class="search__form--selectBoxes">
-                <form action="index.php?this.options[this.selectedIndex].value" id="main" name="main" method="get">
-                    <?php include 'php/reusables/selectors.php';?>                           
+            
+                <form action="index.php?this.options[this.selectedIndex].value" id="main" name="main" method="post">
+                
+                <?php 
+                    try{
+                        include 'php/reusables/selectors.php';
+                    } catch (PDOException $ex) {
+                        $_SESSION['result'] = "An error occurred.";
+                    }
+                ?>                           
                 </form>
             </div>
         </div>
+        <?php 
+            if(!$_SESSION['result']==''){
+                echo "<div class='messageBox'><h3>";
+                echo $_SESSION['result']; 
+                echo "</h3></div>";
+                $_SESSION['result'] = ""; 
+            }
+        ?>
         <div class="mainBoard" id="jobs">
             <h1>
-                Job
-                <span>Board</span>
+                Job<span>Board</span>
             </h1>
             <div class="listings">
                 <?php if($listings) : ?>
@@ -81,9 +117,7 @@
                             </h2>
                         </div>
                         <div class="listings__job--info-line2">
-
                             <?php echo $row['category'] ?>
-
                             <div class="listings__job--info-line2-datePosted">
                                 <?php echo $row['dateposted'] ?>
                             </div>
@@ -106,13 +140,23 @@
 
     <!-- Contact -->
     <section>
-        <?php include 'php/reusables/contact.php' ?>
+        <?php 
+            try{
+                include 'php/reusables/contact.php';
+            }catch (PDOException $ex) {
+                $_SESSION['result'] = "An error occurred.";
+            }
+        ?>
     </section>
     <!-- FOOTER -->
     <section>
-        <?php include 'php/reusables/footer.php' ?>
+        <?php 
+            try{
+                include 'php/reusables/footer.php';
+            }catch (PDOException $ex) {
+                $_SESSION['result'] = "An error occurred.";
+            }
+        ?>
     </section>
-
 </body>
-
 </html>

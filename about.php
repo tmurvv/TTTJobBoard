@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
-<?php include 'php/reusables/head.php' ?>
+    <?php 
+        try {
+            include 'php/reusables/head.php';
+        } catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
 
 <body>
-    <?php include 'php/reusables/hero.php' ?>
-
+    <?php   
+        try {
+            include 'php/reusables/hero.php';
+        } catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
     <!-- ABOUT -->
 
     <section class="about" id="about">
@@ -15,7 +24,7 @@
             <h2>About InnoTech College</h2>
             <p>
                 <img src="img/Guy-Student-300x263.jpg" alt="Smiling Student image">
-                <br> InnoTech College is an Alberta technology college, specializing in programming/development for front-end
+                <br> <a href="https://innotechcollege.com">InnoTech College</a> is an Alberta technology college, specializing in programming/development for front-end
                 and back-end, big data analytics, big data architecture, cloud security and cloud architecture.
                 <br>
                 <br> Founded in 2015, InnoTech College offers programs that fill the gap between the skillsets demanded out by
@@ -63,7 +72,13 @@
     <!-- FOOTER -->
 
     <section>
-        <?php include 'php/reusables/footer.php' ?>
+    <?php 
+        try {
+            include 'php/reusables/footer.php';
+        } catch (PDOException $ex) {
+            $_SESSION['result'] = "An error occurred.";
+        }
+    ?>
     </section>
 
 </body>

@@ -18,7 +18,6 @@ ctrl ~ for terminal enter these commands
 
 git remote add origin $url goes here$ (looks like git@github.com:tmurvv/take2techsitesass.git)
 git push -u origin master
-git push --set-upstream origin master
 
 If you keep getting prompted for credentials try:
 git config --global credential.helper wincred
