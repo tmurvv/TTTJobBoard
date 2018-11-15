@@ -42,8 +42,8 @@
                     fullscreenControl: false,
                 }
 
-                myLatLng = {lat: 51.017740, lng:-114.062860 };
-                mapOptions.center = new google.maps.LatLng(51.017740, -114.062860); // Calgary
+                myLatLng = {lat: 51.0486, lng:-114.0708 };
+                mapOptions.center = new google.maps.LatLng(myLatLng); // Calgary
                 map1 = new google.maps.Map(document.getElementById("mapCanvas1"), mapOptions);
                 
                 marker = new google.maps.Marker({
@@ -52,8 +52,8 @@
                 });
                 marker.setMap(map1);
 
-                myLatLng = {lat:53.541140, lng:-113.493420 };
-                mapOptions.center = new google.maps.LatLng(53.541140, -113.493420); // Edmonton
+                myLatLng = {lat:53.5444, lng:-113.4909 };
+                mapOptions.center = new google.maps.LatLng(myLatLng); // Edmonton
                 map2 = new google.maps.Map(document.getElementById("mapCanvas2"), mapOptions);
                 marker = new google.maps.Marker({
                     position: myLatLng,
@@ -62,7 +62,7 @@
                 marker.setMap(map2);
             }
         </script> 
-        <script async defer src="http://maps.google.com/maps/api/js?key=AIzaSyDMH56XYTfv4tKScOSIFm6GUv1nHwO74Hk&callback=drawMap"></script>
+        <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyDMH56XYTfv4tKScOSIFm6GUv1nHwO74Hk&callback=drawMap"></script>
         <br>
         <br>   
     </div>

@@ -1,5 +1,5 @@
 <div class="hero" id='home'>
-    <a href="index.php"><img class="hero__logo" src="img/Innotech.png" alt="InnoTech College Logo"></a>
+    <a href="index.php"><img class="hero__logo" src="img/logoJobSearch.gif" alt="Innovation College Logo"></a>
     <ul class="hero__mainNav js--mainNav">       
         <li class="hero__mainNav--item">
             <a href="index.php">Job Listings</a>
@@ -19,7 +19,7 @@
     <div class="hero__mainTitle">
 
         <h1 class="hero__mainTitle--mainHeading">
-            InnoTech College Alumni
+            Innovation College Alumni
         </h1>
         <h2 class="hero__mainTitle--subHeading">
             Job<span>Board</span>

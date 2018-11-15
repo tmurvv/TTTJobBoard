@@ -64,11 +64,10 @@
         }
     ?>
     <?php 
-        if(!$_SESSION['result']==''){
-            echo "<div class='messageBox'><h3>";
-            echo $_SESSION['result']; 
-            echo "</h3></div>";
-            $_SESSION['result'] = ""; 
+        try{
+            include 'php/reusables/displayMessage.php';
+        } catch (PDOException $ex) {
+            $_SESSION['result'] = "Error. Message to user not working.";
         }
     ?>
     <div class="deleteJob">

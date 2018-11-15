@@ -21,41 +21,22 @@
     <section class="about" id="about">
         <div class="about__container">
            
-            <h2>About InnoTech College</h2>
+            <h2>About Innovation College</h2>
             <p>
                 <img src="img/Guy-Student-300x263.jpg" alt="Smiling Student image">
-                <br> <a href="https://innotechcollege.com">InnoTech College</a> is an Alberta technology college, specializing in programming/development for front-end
+                <br> <a href="#">Innovation College</a> is a technology college, specializing in programming/development for front-end
                 and back-end, big data analytics, big data architecture, cloud security and cloud architecture.
                 <br>
-                <br> Founded in 2015, InnoTech College offers programs that fill the gap between the skillsets demanded out by
-                employers and those under-delivered by more traditional educational institutions. Our main campus is in Calgary
-                at 4014 MacLeod Trail SE. It is easily accessible via LRT, buses and driving, with much free parking in the
-                area. Our satellite campus is in Edmonton and is located downtown, on Jasper Avenue. It is also easily accessible
-                via Central LRT station.
+                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 <br>
-                <br> We ensure that the largest employers and tech leaders, from both cities, play an active role in our programs’
-                curriculum development, instruction, as well as in welcoming our students and graduates into their organizations
-                for internship and job opportunities.
+                <br> Sit amet tellus cras adipiscing enim eu turpis egestas. Sit amet porttitor eget dolor morbi. Ac turpis egestas maecenas pharetra convallis. Nulla aliquet porttitor lacus luctus. Lorem ipsum dolor sit amet. Id interdum velit laoreet id donec ultrices tincidunt arcu. Non arcu risus quis varius quam quisque id. 
                 <br>
-                <br> Our post-secondary programs are designed to take students from <strong>having no previous knowledge</strong> of their chosen
-                industry, to being ready to successfully qualify for <strong>positions</strong> in the fields of programming, big-data and
-                cloud services.
+                <br> Tortor consequat id porta nibh venenatis cras sed felis. Sit amet nulla facilisi morbi tempus iaculis urna. Mattis rhoncus urna neque viverra justo nec ultrices. Pharetra sit amet aliquam id diam maecenas ultricies mi eget.
                 <br>
-                <br> We want to make a difference in helping individuals, unsure of thei
-                r future, build a solid foundation of
-                education and experience that enables them to reach their goals and create a life they’ve only ever dreamed
-                of.
+                <br> Sodales ut etiam sit amet. Consectetur lorem donec massa sapien faucibus et. Nisl condimentum id venenatis a. Turpis in eu mi bibendum neque. Justo eget magna fermentum iaculis eu. Dolor purus non enim praesent elementum facilisis leo. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus.
                 <br>
-                <br> InnoTech College is licensed and designated in Alberta, under the Private Vocational Training Act. Its provincial
-                Educational Institution codes are BPOS (Calgary) and BPPE (Edmonton). With it being a designated institution,
-                all of our students are eligible for <strong>government loans, grants and scholarships</strong>. We assist all of our students
-                with applying for these funding sources. InnoTech College also has a DLI number and is happy to serve international
-                students.
                 <br>
-
-                <br> We welcome you to learn more about the <a href="https://www.innotechcollege.com/about/team" target="_blank">instructors</a> of our programming college and if you’d like to learn
-                eve more, we’d also love to meet you in person. Please schedule an information appointment by going <a href="https://www.innotechcollege.com/contact/information-appointment-request" target="_blank">here</a>.
-            </p>
+                </p>
             <br>
             <div class="about__container--thisWebsite">
             <h2>About this website</h2>

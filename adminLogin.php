@@ -13,7 +13,7 @@
     }
 
     //Validate Admin Token
-    if ($_SESSION['adminToken'] == $systemAdminToken) {
+    if (isset($_SESSION['adminToken']) && $_SESSION['adminToken'] == $systemAdminToken) {
         header("Location: admin.php");
     }
 ?>
@@ -73,11 +73,10 @@
         <br>
         <form method="post" action="adminLogin.php">
             <?php 
-                if(!$_SESSION['result']==''){
-                    echo "<div class='messageBox' style='margin: inherit;'><h3>";
-                    echo $_SESSION['result']; 
-                    echo "</h3></div><br>";
-                    $_SESSION['result'] = ""; 
+                try{
+                    include 'php/reusables/displayMessage.php';
+                } catch (PDOException $ex) {
+                    $_SESSION['result'] = "Error. Message to user not working.";
                 }
             ?>    
             <div class="adminLogin__passwordInput">               

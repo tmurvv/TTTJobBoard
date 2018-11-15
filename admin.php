@@ -1,7 +1,12 @@
 <?php 
     //Start the session
     session_start();
+
+    //initialize variables
     $_SESSION['result']='';
+    if (!isset($_SESSION['adminToken'])) {
+        $_SESSION['adminToken'] = '';
+    }
      
     try{
         include 'php/config/config.php';
@@ -13,37 +18,37 @@
     }
 
     //Validate Admin Token
-    if (!$_SESSION['adminToken'] == $systemAdminToken) {
+    if (isset($_SESSION['adminToken']) && !$_SESSION['adminToken'] == $systemAdminToken) {
         echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
         return;
     }
 ?>
 <?php
-  //Assign POST variables
-  $categorySearchID = $_POST['category'];
-  $jobtypeSearchID = $_POST['jobtype'];
-  $locationSearchID = $_POST['location'];
+    $categorySearchID = "empty";
+    $jobtypeSearchID = "empty";
+    $locationSearchID = "empty";
 
-  //Initialize search IDs
-  if(!$categorySearchID){
-      $categorySearchID = "empty";
-  } 
-  if (!$jobtypeSearchID){
-      $jobtypeSearchID = "empty";
-  }  
-  if (!$locationSearchID){
-      $locationSearchID = "empty";
-  }
+    if (isset($_POST['submit'])) {
+        //Get POST variables
+        $categorySearchID = $_POST['category'];
+        $jobtypeSearchID = $_POST['jobtype'];
+        $locationSearchID = $_POST['location'];   
+    }
 
-  //Create Search Query
-  try{
-    $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $listings=$statement->fetchAll();
-  }catch(PDOException $ex){
-    $_SESSION['result'] = "An error occurred.";
-  } 
+    //Create and execute Query  
+    try{
+        $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $listings=$statement->fetchAll();
+
+        //if no job listings found
+        if (count($listings) == 0) {
+            $_SESSION['result'] = "No job listings found.";
+        }
+    }catch (PDOException $ex) {
+        $_SESSION['result'] = "An error occurred.";
+    }
 ?>
 <?php 
     try{
@@ -87,14 +92,6 @@
             </ul>
         </div>
         <div class="search__form">
-            <?php 
-                if(!$_SESSION['result']==''){
-                    echo "<div class='messageBox'><h3>";
-                    echo $_SESSION['result']; 
-                    echo "</h3></div>";
-                    $_SESSION['result'] = ""; 
-                }
-            ?>
             <div class="search__form--title">
                 <h2>Search</h2>
             </div>
@@ -110,12 +107,21 @@
                 </form>
             </div>
         </div>
+        <?php 
+            try{
+                include 'php/reusables/displayMessage.php';
+            } catch (PDOException $ex) {
+                $_SESSION['result'] = "Error. Message to user not working.";
+            }
+        ?>
     </div>
     <div class="mainBoard" id="jobs">
         <?php 
-            if ($msg) {
-                echo "<div class='admin__messageBox'>".$msg."</div>";
-            } 
+            try{
+                include 'php/reusables/displayMessage.php';
+            } catch (PDOException $ex) {
+                $_SESSION['result'] = "An error occurred.";
+            }
         ?>
         <h1>Job<span>Board</span>
         </h1>

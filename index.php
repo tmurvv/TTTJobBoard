@@ -12,23 +12,19 @@
         echo 'File not found. Please contact the system administrator.';
     } 
 ?>
-<?php 
-    //Get POST variables
-    $categorySearchID = $_POST['category'];
-    $jobtypeSearchID = $_POST['jobtype'];
-    $locationSearchID = $_POST['location'];
+<?php
 
-    //Initialize search IDs if not POSTED
-    if(!$categorySearchID){
-        $categorySearchID = "empty";
+    $categorySearchID = "empty";
+    $jobtypeSearchID = "empty";
+    $locationSearchID = "empty";
+
+    if (isset($_POST['submit'])) {
+        //Get POST variables
+        $categorySearchID = $_POST['category'];
+        $jobtypeSearchID = $_POST['jobtype'];
+        $locationSearchID = $_POST['location'];   
     }
-    if (!$jobtypeSearchID){
-        $jobtypeSearchID = "empty";
-    }   
-    if (!$locationSearchID){
-        $locationSearchID = "empty";
-    }
- 
+    
     //Create and execute Query  
     try{
         $query=createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID);
@@ -42,7 +38,8 @@
         }
     }catch (PDOException $ex) {
         $_SESSION['result'] = "An error occurred.";
-    }    
+    }
+        
 ?>
 <!-- Create Selector Queries for search area select boxes-->
 <?php try{
@@ -74,10 +71,8 @@
             <div class="search__form--title">
                 <h2>Search</h2>
             </div>
-            <div class="search__form--selectBoxes">
-            
-                <form action="index.php?this.options[this.selectedIndex].value" id="main" name="main" method="post">
-                
+            <div class="search__form--selectBoxes">           
+                <form action="index.php?this.options[this.selectedIndex].value" id="main" name="main" method="post">                
                 <?php 
                     try{
                         include 'php/reusables/selectors.php';
@@ -89,11 +84,10 @@
             </div>
         </div>
         <?php 
-            if(!$_SESSION['result']==''){
-                echo "<div class='messageBox'><h3>";
-                echo $_SESSION['result']; 
-                echo "</h3></div>";
-                $_SESSION['result'] = ""; 
+            try{
+                include 'php/reusables/displayMessage.php';
+            } catch (PDOException $ex) {
+                $_SESSION['result'] = "An error occurred.";
             }
         ?>
         <div class="mainBoard" id="jobs">
@@ -101,7 +95,7 @@
                 Job<span>Board</span>
             </h1>
             <div class="listings">
-                <?php if($listings) : ?>
+                <?php if(isset($listings)) : ?>
                 <?php foreach($listings as $row) : ?>
                 <div class="listings__job">
                     <div class="listings__job--type">
