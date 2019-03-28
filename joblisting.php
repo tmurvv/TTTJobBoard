@@ -16,6 +16,7 @@
   //Go back to index page?
   if (isset($_POST['back'])) {
     header("Location: index.php");
+    exit;
   }
 
   //Retrieve id for jobListing

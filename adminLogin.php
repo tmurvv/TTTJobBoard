@@ -15,6 +15,7 @@
     //Validate Admin Token
     if (isset($_SESSION['adminToken']) && $_SESSION['adminToken'] == $systemAdminToken) {
         header("Location: admin.php");
+        exit;
     }
 ?>
 <?php
@@ -37,6 +38,7 @@
     if(password_verify($password, $hashed_password)){
         $_SESSION['adminToken'] = $systemAdminToken;
         header("Location: admin.php");
+        exit;
     }else{
         $_SESSION['result'] = "Invalid Username or password.";
     }     

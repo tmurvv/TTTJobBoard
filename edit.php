@@ -76,6 +76,7 @@
     $stmt->execute($newData);
     }
     header('Location: admin.php?id='.$id);
+    exit;
 }
 ?>
 <!DOCTYPE html>

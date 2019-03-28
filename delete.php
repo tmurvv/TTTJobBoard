@@ -39,6 +39,7 @@
             $query = "DELETE FROM joblistings WHERE id = ".$id;
             $db->exec($query);
             header("Location: admin.php");
+            exit;
         }catch(PDOException $ex){
             $_SESSION['result'] = "An error occurred.";
         }

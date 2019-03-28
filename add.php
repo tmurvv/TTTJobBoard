@@ -67,7 +67,8 @@
         }catch(PDOException $error){
             $_SESSION['result'] = "An error occurred.";
         }       
-        header('Location: joblisting.php?id='.$last_id);   
+        header('Location: joblisting.php?id='.$last_id);
+        exit;
     }
   }   
 ?>

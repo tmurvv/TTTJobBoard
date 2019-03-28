@@ -67,7 +67,8 @@
         }catch(PDOException $ex) {
             $_SESSION['result'] = "An error occurred.";
         }
-        header('Location: addeditselectors.php');         
+        header('Location: addeditselectors.php');
+        exit;        
     }
     if (isset($_POST['editcat'])){
         //Assign Vars
@@ -101,6 +102,7 @@
             $_SESSION['result'] = "An error occurred.";
         }
         header('Location: addeditselectors.php');
+        exit;
     }
     if(isset($_POST['deletecat'])){
        
@@ -114,6 +116,7 @@
             $_SESSION['result'] = "An error occurred.";
             }
             header("Location: addeditselectors.php");
+            exit;
         }else{
             $result = "An error occurred. No changes made.";
         }
@@ -157,6 +160,7 @@
                 $_SESSION['result'] = "An error occurred.";
             }
             header('Location: addeditselectors.php');
+            exit;
         }       
     }
     if(isset($_POST['editjobtype'])){
@@ -193,6 +197,7 @@
                 $_SESSION['result'] = "An error occurred.";
             }
             header('Location: addeditselectors.php');
+            exit;
         }else{
             $result = "An error occurred. No changes made.";
         }       
@@ -209,6 +214,7 @@
                 $_SESSION['result'] = "An error occurred.";
             }
             header("Location: addeditselectors.php");
+            exit;
         }else{
             $result = "An error occurred. No changes made.";
         }
@@ -251,6 +257,7 @@
                 $_SESSION['result'] = "An error occurred.";
             }
             header('Location: addeditselectors.php');
+            exit;
         }
         
     }
@@ -287,6 +294,7 @@
                 $_SESSION['result'] = "An error occurred.";
             }
             header('Location: addeditselectors.php');
+            exit;
         }else{
             $result = "An error occurred. No changes made.";
         }
@@ -303,6 +311,7 @@
             $_SESSION['result'] = "An error occurred.";
             }
             header("Location: addeditselectors.php");
+            exit;
         }
     }else{
         $result = "An error occurred. No changes made.";
