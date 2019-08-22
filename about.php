@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <?php 
-        try {
-            include 'php/reusables/head.php';
-        } catch (PDOException $ex) {
-            $_SESSION['result'] = "An error occurred.";
-        }
-    ?>
-
+    <head>
+        <?php 
+            try {
+                include 'php/reusables/head.php';
+            } catch (PDOException $ex) {
+                $_SESSION['result'] = "An error occurred.";
+            }
+        ?>
+    </head>
 <body>
+    <!-- Hero/Landing page -->
     <?php   
         try {
             include 'php/reusables/hero.php';
@@ -17,10 +19,8 @@
         }
     ?>
     <!-- ABOUT -->
-
     <section class="about" id="about">
-        <div class="about__container">
-           
+        <div class="about__container">          
             <h2>About Innovation College</h2>
             <p>
                 <img src="img/Guy-Student-300x263.jpg" alt="Smiling Student image">
@@ -49,9 +49,7 @@
             </div>
         </div>
     </section>
-
     <!-- FOOTER -->
-
     <section>
     <?php 
         try {
@@ -61,7 +59,5 @@
         }
     ?>
     </section>
-
 </body>
-
 </html>

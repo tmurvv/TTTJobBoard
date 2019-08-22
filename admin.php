@@ -1,13 +1,7 @@
 <?php 
     //Start the session
     session_start();
-
-    //initialize variables
-    $_SESSION['result']='';
-    if (!isset($_SESSION['adminToken'])) {
-        $_SESSION['adminToken'] = '';
-    }
-     
+    //include files
     try{
         include 'php/config/config.php';
         include 'php/classes/Database.php';
@@ -16,7 +10,11 @@
     }catch (PDOException $ex) {
         echo 'File not found. Please contact the system administrator.';
     }
-
+    //initialize variables
+    $_SESSION['result']='';
+    if (!isset($_SESSION['adminToken'])) {
+        $_SESSION['adminToken'] = '';
+    }
     //Validate Admin Token
     if (isset($_SESSION['adminToken']) && !$_SESSION['adminToken'] == $systemAdminToken) {
         echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
@@ -24,6 +22,7 @@
     }
 ?>
 <?php
+    //initialize variables
     $categorySearchID = "empty";
     $jobtypeSearchID = "empty";
     $locationSearchID = "empty";
@@ -67,6 +66,7 @@
         }
     ?>
 <body>
+    <!-- Hero/Landing section -->
     <?php 
         try{
             include 'php/reusables/hero.php';
@@ -74,6 +74,7 @@
             $_SESSION['result'] = "File not found. Please contact the system administrator.";
         }
     ?>
+    <!-- Update select boxes -->
     <div class="menus">
         <div class="menus__addNav">
             <ul class="menus__addNav--container">
@@ -107,15 +108,9 @@
                 </form>
             </div>
         </div>
-        <?php 
-            try{
-                include 'php/reusables/displayMessage.php';
-            } catch (PDOException $ex) {
-                $_SESSION['result'] = "Error. Message to user not working.";
-            }
-        ?>
     </div>
     <div class="mainBoard" id="jobs">
+        <!-- check for message to user -->
         <?php 
             try{
                 include 'php/reusables/displayMessage.php';
@@ -129,6 +124,7 @@
         <div class="listings">
             <?php if($listings) : ?>
             <?php foreach($listings as $row) : ?>
+            <!-- Display job listing -->
             <div class="listings__job">
                 <div class="listings__job--type">
                     <p class="btn btn__secondary">
@@ -148,6 +144,7 @@
                             <?php echo $row['dateposted'] ?>
                         </div>
                     </div>
+                    <!-- display edit/delete buttons -->
                     <div class="admin__editDelete">
                         <a href="edit.php?id=<?php echo $row['id']; ?>" class="admin__editDelete--edit btn btn__primary">Edit</a>
                         <a href="delete.php?id=<?php echo $row['id']; ?>" class="admin__editDelete--delete btn btn__danger">Delete</a>
@@ -163,7 +160,6 @@
             <?php endforeach; ?>
             <?php endif; ?>
         </div>
-
     </div>
     <!-- FOOTER -->
     <section>

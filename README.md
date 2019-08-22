@@ -1,5 +1,6 @@
-This website is a generic version of the InnoTech College JobBoard adapted for the take2tech.ca marketing website. 
-Designed and Developed by Tisha Murvihill, www.take2tech.ca
+This website is an unbranded version of a JobBoard created for  InnoTech College in Calgary. This job-board targets specific jobs related to the courses the college offers (BigData, SharePoint, etc).
+
+Website designed and developed by Tisha Murvihill, www.take2tech.ca
 
 August, 2018
 

@@ -32,24 +32,24 @@
         $result = "An error occurred.";
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'php/reusables/head.php' ?>
 <body>
     <?php include 'php/reusables/hero.php' ?>
-
     <div class="mainBoard" id="jobs">      
         <h1>Job<span>Board</span></h1>
+        <!-- check for message to user -->
         <?php 
             try{
                 include 'php/reusables/displayMessage.php';
             } catch (PDOException $ex) {
-                $_SESSION['result'] = "Error. Message to user not working.";
+                $_SESSION['result'] = "Something went wrong.";
             }
         ?>
+        <!-- Show 'Back to Job Listings' button -->
         <a href="index.php" class="btn btn__secondary btn__shadow" style="text-decoration:none;">Back to job listings</a>
-
+        <!-- show job listing -->
         <div class="listings">
             <?php if($listing) : ?>
             <div class="listings__job">
@@ -66,10 +66,7 @@
                         </h2>
                     </div>
                     <div class="listings__job--info-line2">
-
-
                         <?php echo $listing['category'] ?>
-
                         <div class="listings__job--info-line2-datePosted">
                             <?php echo $listing['dateposted'] ?>
                         </div>
@@ -85,12 +82,9 @@
                 <?php endif; ?>
         </div>
     </div>
-    
-
     <!-- FOOTER -->
     <section>
         <?php include 'php/reusables/footer.php' ?>
     </section>
-
 </body>
 </html>

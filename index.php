@@ -2,7 +2,8 @@
     // Start the session
     session_start();
 ?>
-<?php     
+<?php 
+    // include files    
     try{
         include 'php/config/config.php';
         include 'php/classes/Database.php';
@@ -13,7 +14,7 @@
     } 
 ?>
 <?php
-
+    //initialize search variables
     $categorySearchID = "empty";
     $jobtypeSearchID = "empty";
     $locationSearchID = "empty";
@@ -41,7 +42,7 @@
     }
         
 ?>
-<!-- Create Selector Queries for search area select boxes-->
+<!-- Create Selector Queries for search area select boxes -->
 <?php try{
     include 'php/reusables/selectorQueries.php';
     }catch (PDOException $ex) {
@@ -59,6 +60,7 @@
     ?>
 </head>
 <body>
+    <!-- Landing/Hero section -->
     <?php 
         try{ 
             include 'php/reusables/hero.php';
@@ -66,6 +68,7 @@
             $_SESSION['result'] = "An error occurred.";
         }
     ?>
+    <!-- Search select box section -->
     <div class="search">
         <div class="search__form">
             <div class="search__form--title">
@@ -83,6 +86,7 @@
                 </form>
             </div>
         </div>
+        <!-- check for message to user -->
         <?php 
             try{
                 include 'php/reusables/displayMessage.php';
@@ -90,6 +94,7 @@
                 $_SESSION['result'] = "An error occurred.";
             }
         ?>
+        <!-- Job Listings -->
         <div class="mainBoard" id="jobs">
             <h1>
                 Job<span>Board</span>
@@ -130,8 +135,6 @@
             </div>
         </div>
     </div>
-
-
     <!-- Contact -->
     <section>
         <?php 

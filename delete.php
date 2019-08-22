@@ -19,10 +19,10 @@
     }
 ?>
 <?php
-    //Retrieve id for job editting
+    //Retrieve id for delete
     $id = $_GET['id'];
   
-    //Create Query
+    //Get info on item to be deleted for confirmation window
     try{
         $query = "SELECT * FROM joblistings WHERE id = :id";
         $statement = $db->prepare($query);
@@ -31,9 +31,7 @@
     }catch(PDOException $ex){
         $_SESSION['result'] = "An error occurred.";
     }
-
-    if(isset($_POST['delete'])){
-        
+    if(isset($_POST['delete'])){       
         try{
             //Create and run delete query
             $query = "DELETE FROM joblistings WHERE id = ".$id;
@@ -57,6 +55,7 @@
     ?>
 </head>
 <body>
+    <!-- Hero/Landing section -->
     <?php 
         try{
             include 'php/reusables/hero.php';
@@ -64,14 +63,15 @@
             $_SESSION['result'] = "An error occurred.";
         }
     ?>
-    <?php 
+    <?php // Check for message to user
         try{
             include 'php/reusables/displayMessage.php';
         } catch (PDOException $ex) {
-            $_SESSION['result'] = "Error. Message to user not working.";
+            $_SESSION['result'] = "Something went wrong.";
         }
     ?>
     <div class="deleteJob">
+    <!-- confirm deletion -->
         <div class="deleteJob__ask">Delete Job Listing
             <br>
             '<?php echo $delete['title']; ?>'? </div>
@@ -91,5 +91,4 @@
         ?>
     </section>
 </body>
-
 </html>

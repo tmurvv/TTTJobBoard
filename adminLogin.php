@@ -2,7 +2,7 @@
     //Start the session
     session_start();
     $_SESSION['result']='';
-     
+    // include files
     try{
         include 'php/config/config.php';
         include 'php/classes/Database.php';
@@ -11,7 +11,6 @@
     }catch (PDOException $ex) {
         echo 'File not found. Please contact the system administrator.';
     }
-
     //Validate Admin Token
     if (isset($_SESSION['adminToken']) && $_SESSION['adminToken'] == $systemAdminToken) {
         header("Location: admin.php");
@@ -23,7 +22,6 @@
     //Assign Vars    
     $password = $_POST['password'];
     $hashed_password = '';
-
     //get hashed password
     try{
         $splQuery = "SELECT * FROM jobboard_users LIMIT 1";
@@ -34,7 +32,7 @@
     }catch (PDOException $ex) {
         $_SESSION['result'] = "An error occurred.";
     }
-
+    //Verify passwords
     if(password_verify($password, $hashed_password)){
         $_SESSION['adminToken'] = $systemAdminToken;
         header("Location: admin.php");
@@ -59,6 +57,7 @@
     ?>
 </head>
 <body>
+    <!-- Hero/Landing section -->
     <?php 
         try{ 
             include 'php/reusables/hero.php';
@@ -73,6 +72,7 @@
 
         <h3>Admin Login</h3>
         <br>
+        <!-- Login section -->
         <form method="post" action="adminLogin.php">
             <?php 
                 try{
@@ -87,11 +87,9 @@
                     <input type="submit" name="submit" class="btn btn__primary" value="Submit" />
                     <a href="index.php" class="edit__cancel btn btn__secondary">Cancel</a>
                 </div>
-            </div>
-            
+            </div>           
         </form>
     </div>
-
     <!-- FOOTER -->
     <section>
         <?php 

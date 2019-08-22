@@ -2,10 +2,9 @@
     //Start the session
     session_start();
     $_SESSION['result']='';
-
     //Validate Admin Token
-    if (!$_SESSION['adminToken'] == '4a70afd6-96f1-4e36-b3cd-92288096e5e8') {
-        echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
+    if (!$_SESSION['adminToken'] == $systemAdminToken) {
+        echo 'Invalid password. Please navigate to adminLogin.php and login again.';    
         return;
     }
 ?>

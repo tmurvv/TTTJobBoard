@@ -1,7 +1,7 @@
 <?php 
 /**************
- * This file adds a user called 'admin' to a database called 'jobboard_users'.
- * A hashed password is also added. This admin password is required to update 
+ * This file adds a user called 'REDACTED' to a database called 'jobboard_users'.
+ * A hashed password is also added. This password is required to update 
  * the jobboard. This is a temporary fix until a full user login system is
  * implemented.
  ********************/ ?>
@@ -11,8 +11,8 @@
 <?php include 'php/helpers/controllers.php'; ?>
 <?php include 'php/helpers/formatting.php'; ?>
 <?php
-    $hashedPassword = password_hash("admin4014", PASSWORD_DEFAULT);
-    $username = "admin";
+    $hashedPassword = password_hash("REDACTED", PASSWORD_DEFAULT);
+    $username = "REDACTED";
 
     try {$sql = "INSERT INTO jobboard_users(  
         username,

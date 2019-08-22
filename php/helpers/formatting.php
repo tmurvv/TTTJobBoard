@@ -9,12 +9,17 @@ function formatDate($date) {
     return date('F j, Y');
 }
 
+/*
+shorten job listing for display
+*/
 function concatText($text) {
     return substr($text, 0, 350);
 }
 
-function completeMsg($msg) {
-    
+/*
+*backend messaging
+*/
+function completeMsg($msg) {   
     switch ($msg) {
         case '':
             break;

@@ -1,6 +1,6 @@
 <?php
 /*  create queries to filter job listing results by inputs from 
-    search select boxes (category, Job Type, Location)  */ 
+    search select boxes (Category, Job Type, Location)  */ 
 
 function createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID) {
     if ($locationSearchID == 'empty') {
@@ -24,7 +24,6 @@ function createQuery($categorySearchID, $jobtypeSearchID, $locationSearchID) {
             $query = "SELECT * FROM joblistings WHERE jobtype='{$jobtypeSearchID}' AND category='{$categorySearchID}' AND location='{$locationSearchID}' ORDER BY dateposted DESC";
         }
     }
-
     return $query;
 }
 ?>

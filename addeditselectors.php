@@ -1,7 +1,7 @@
 <?php 
     //Start the session
     session_start();
-    
+    // include files
     try{
         include 'php/config/config.php';
         include 'php/classes/Database.php';
@@ -10,7 +10,6 @@
     }catch (PDOException $ex) {
         echo 'File not found. Please contact the system administrator.';
     }
-
     //Validate Admin Token
     if (!isset($_SESSION['adminToken']) || !$_SESSION['adminToken'] == $systemAdminToken) {
         echo 'Invalid token. Please navigate to adminLogin.php and enter the password to secure a valid token.';    
@@ -29,7 +28,6 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
     }
-
     if(isset($_POST['addcat'])){       
         //Assign Vars
         if (isset($_POST['category'])) {  
@@ -258,8 +256,7 @@
             }
             header('Location: addeditselectors.php');
             exit;
-        }
-        
+        }       
     }
     if(isset($_POST['editlocation'])){
         //Assign Vars 
@@ -299,8 +296,7 @@
             $result = "An error occurred. No changes made.";
         }
     }
-    if(isset($_POST['deletelocation'])){
-        
+    if(isset($_POST['deletelocation'])){        
         if (isset($id)) {
             //Create and run delete query
             try{
@@ -318,18 +314,18 @@
     }
 ?>
 <!DOCTYPE html>
-
 <html lang="en">
-
-<?php 
-    try{
-        include 'php/reusables/head.php';
-    }catch(PDOException $ex){
-        $_SESSION['result'] = "File not found. Please contact the system administrator.";
-    }    
+<head>
+    <?php 
+        try{
+            include 'php/reusables/head.php';
+        }catch(PDOException $ex){
+            $_SESSION['result'] = "File not found. Please contact the system administrator.";
+        }    
  ?>
-
+</head>
 <body>
+    <!-- Hero/Landing section -->
     <?php 
         try{
             include 'php/reusables/hero.php';
@@ -339,9 +335,8 @@
     ?>
     <div class="updateSelectorsHeading">
         <h2 class="addJob__mainHeading">Job<span>Board</span></h2>
-
         <h3>Add/Edit/Delete Selectors</h3>
-
+        <!-- message to user -->
         <?php 
             try{
                 include 'php/reusables/displayMessage.php';
@@ -350,8 +345,9 @@
             }
         ?>
     </div>
+    <!-- add/edit/delete selectors section -->
     <div class="updateSelectors">
-
+        <!-- Categories -->
         <div class="updateSelectors__selector" id="categories">
             <h4>Update Categories</h4>
             <p>SelectBox Order | Category</p>
@@ -360,9 +356,7 @@
                 <input type="text" name="category" placeholder="Add Category" class="btn" />
                 <button class="btn btn__primary" type="submit" name="addcat">Add</button>
             </form>
-
             <table name="category">
-
                 <?php foreach($categories as $row) : ?>
                 <form method="post" action="addeditselectors.php?id=<?php echo $row['id'] ?>">
                     <div class="updateSelectors__selector--item">
@@ -387,10 +381,10 @@
                     </div>
                 </form>
                 <?php endforeach; ?>
-
             </table>
         </div>
         <hr>
+        <!-- Job Types -->
         <div class="updateSelectors__selector" id="jobTypes">
             <h4>Update Job Types</h4>
             <p>SelectBox Order | Job Type</p>
@@ -400,7 +394,6 @@
                 <button class="btn btn__primary" type="submit" name="addjobtype">Add</button>
             </form>
             <table name="jobtypes" id="">
-
                 <?php foreach($jobTypes as $row) : ?>
                 <form method="post" action="addeditselectors.php?id=<?php echo $row['id'] ?>">
                     <div class="updateSelectors__selector--item">
@@ -424,11 +417,10 @@
                     </div>
                 </form>
                 <?php endforeach; ?>
-
             </table>
-
         </div>
         <hr>
+        <!-- Locations -->
         <div class="updateSelectors__selector" id="locations">
             <h4>Update Locations</h4>
             <p>SelectBox Order | Location</p>
@@ -437,7 +429,6 @@
                 <input type="text" name="location" placeholder="Add Location" class="btn" />
                 <button class="btn btn__primary" type="submit" name="addlocation">Add</button>
             </form>
-
                 <?php foreach($locations as $row) : ?>
                 <form method="post" action="addeditselectors.php?id=<?php echo $row['id'] ?>">
                     <div class="updateSelectors__selector--item">

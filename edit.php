@@ -51,7 +51,6 @@
       $error = 'Please fill out all required fields.';
     } else {
     
-
     //Create Data
     $newData = [
         'title' => $title,
@@ -80,7 +79,6 @@
 }
 ?>
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <?php 
@@ -92,6 +90,7 @@
     ?>
 </head>
 <body>
+    <!-- Hero/Landing section -->
     <?php 
         try{
             include 'php/reusables/hero.php';
@@ -99,10 +98,12 @@
             $_SESSION['result'] = "File not found. Please contact the system administrator.";
         }    
     ?>
+    <!-- Edit job section -->
     <div class="addJob">
         <h2 class="addJob__mainHeading">
             Job<span>Board</span>
         </h2>
+        <!-- check for message to user -->
         <?php 
             try{
                 include 'php/reusables/displayMessage.php';
@@ -112,6 +113,7 @@
         ?>
         <h3>Edit Job Listing</h3>
         <form method="post" action="edit.php?id=<?php echo $id; ?>">
+            <!-- job info edit area -->
             <div class="addJob__job">
                 <div class="addJob__job--title">
                     <input name="title" type="text" placeholder="Enter Job Title" value="<?php echo $updateRecord['title']; ?>">
@@ -126,6 +128,7 @@
                     </textarea>
                     <script>CKEDITOR.replace( 'description' );</script>
                 </div>
+                <!-- search select boxes edit area -->
                 <select name="category" class="addSearch__form--selectBoxes-item" id="">
                     <?php foreach($categories as $row) : ?>
                         <?php 
@@ -169,6 +172,7 @@
                     <?php endforeach; ?>
                 </select>
             </div>
+            <!-- submit/cancel buttons -->
             <input type="submit" name="submit" class="addSearch__form--selectBoxes-item btn btn__primary" value="Submit" />
             <a href="admin.php" class="edit__cancel btn btn__secondary">Cancel</a>
         </form>
